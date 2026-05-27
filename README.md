@@ -2,6 +2,8 @@
 
 Paper2Excel 是一个 Windows 桌面软件：把 Excel/CSV 中的论文记录逐行交给大模型分析，再把结构化结果写回新的 Excel/CSV。它适合处理 Zotero 导出的文献表、论文清单、PDF 附件路径和自定义综述字段。
 
+[English README](README.en.md)
+
 ![Paper2Excel 图标](assets/Paper2Excel.png)
 
 ## 主要功能
@@ -18,12 +20,58 @@ Paper2Excel 是一个 Windows 桌面软件：把 Excel/CSV 中的论文记录逐
 - 自动保存进度，失败行会记录 `_status`、`_error`、`_model`、`_processed_at`、`_raw_response`。
 - 可打包为 Windows 便携版 EXE，别人下载 Release zip 后解压即可运行。
 
+## 处理前后示例
+
+下面的示例来自一个 Zotero 导出的 CSV 和 Paper2Excel 处理后的 XLSX。原始 CSV 有 87 个 head，包含很多空列和 Zotero 元数据列；Paper2Excel 允许你选择通常要保留的论文元数据列，再新增 AI 输出列，最后得到结构化结果表。
+
+![Paper2Excel 处理逻辑示例](docs/images/example-before-after.png)
+
+这个示例中：
+
+- 原始导出的 `Title` 是 `Disaster as a Morphogenetic Agent of Change: Planning for Post-Disaster Recovery`。
+- 通常保留的原始列包括 `Title`、`Publication Title`、`Publication Year`、`Author`、`DOI`、`Abstract Note`、`File Attachments`。
+- 用户可以指定 AI 新增输出列，例如 `Summary`、`Cases/Panel studies`、`Single/Multi disaster event`、`Is Earthquake`、`Time span`、`Reconstruction actions`、`Cities`。
+- 每个 AI 字段都可以先写大白话说明，再点击“AI 优化为稳定 Prompt”，让模型自动改写成更适合英文论文和 Excel 结构化输出的 Prompt。
+- 最终输出 head 的顺序是：保留的原始列 + 你排序后的 AI 字段 + 诊断列。
+
+<details>
+<summary>处理后第一行完整内容示例</summary>
+
+```json
+{
+  "Publication Year": "2026",
+  "Author": "Wu, Yanchen; Gu, Kai",
+  "Title": "Disaster as a Morphogenetic Agent of Change: Planning for Post-Disaster Recovery",
+  "Publication Title": "Journal of Planning Literature",
+  "DOI": "10.1177/08854122261422743",
+  "Abstract Note": "摘要The field of post-disaster recovery has undergone major epistemological shifts in the past century, with disasters being redefined beyond natural phenomena to expose vulnerabilities within institutional and social systems. Despite planning being recognized as essential for building back better, this ideal remains constrained by incoherent and maladaptive post-disaster spatial intervention. Insufficient theoretical and instrumental grounding for recovery planning is a major problem. The idea of urban morphogenesis describes and prescribes adaptive and fundamental urban changes. Recognizing disaster as a morphogenetic agent of change forms the basis for morpho-resilience—a tactical and place-based planning framework for more coherent post-disaster recovery.在过去的世纪里，灾后恢复领域经历了重大的认识论转变，灾害被重新定义为超越自然现象，以揭示制度和社会系统中的脆弱性。尽管规划被认为是重建更好的关键，但这一理想仍然受到不一致和适应性差的灾后空间干预的限制。恢复规划的理论和工具基础不足是一个主要问题。城市形态发生学描述和规定适应性及根本性的城市变化。将灾害视为形态发生变化的驱动力是形态韧性——一种战术性和基于地点的规划框架，用于更一致的灾后恢复——的基础。",
+  "File Attachments": "D:\\Zotero\\storage\\...\\Wu et al._2026_Disaster as a Morphogenetic Agent of Change Planning for Post-Disaster Recovery.pdf",
+  "Summary": "This paper critically reviews the literature on post-disaster recovery from the early twentieth century to 2025, tracing the shift from fatalism through hazard and vulnerability paradigms. It identifies that despite the 'build back better' ideal, recovery planning remains constrained by traditional land-use zoning and inadequate responses to structural vulnerabilities embedded in urban landscapes. Drawing on the concept of urban morphogenesis, the paper reinterprets disaster as a morphogenetic agent of change and proposes 'morpho-resilience'—a place-based, tactical planning framework. This framework involves delineating landscape management zones based on morphological analysis, participatory mapping, and integrating form-function-community relationships. It aims to provide a coherent basis for recovery plans that balance continuity and adaptation, address underlying risk, and foster resilient post-disaster urban development.",
+  "Cases/Panel studies": "Insufficient evidence",
+  "Single/Multi disaster event": "Multi",
+  "Single/Cross disaster type": "Cross",
+  "Is Earthquake": "No",
+  "Time span": "from early twentieth century to 2025",
+  "Is year": "Yes",
+  "Reconstruction actions": "land use zoning ordinances, building code amendments, risk-based zoning and subdivision regulations, red-zone designation, coastal buffer zone, wildfire management overlay map, street grid replanning, building height restrictions, new materials, structural designs, relocation, shelter reconstruction",
+  "Cities": "Ishinomaki City, Rikuzen-Takata City, Valparaíso, Christchurch, Ofunato City, Dujiangyan, Enköping, Strängnäs, Köping, Uppsala",
+  "总结": "文章回顾灾后恢复范式的演变，指出传统土地利用规划不足以应对结构性脆弱性。提出将灾害视为形态发生变化的动因，构建形态韧性框架，通过划定景观管理区来实现一致且适应性的恢复规划。",
+  "_status": "success",
+  "_error": "",
+  "_model": "deepseek-v4-pro",
+  "_processed_at": "2026-05-27T16:30:25",
+  "_raw_response": "[saved in the real output workbook; omitted here because it repeats the JSON values above]"
+}
+```
+
+</details>
+
 ## 快速使用
 
 从 GitHub Release 下载：
 
 ```text
-Paper2Excel-v0.1.0-windows.zip
+Paper2Excel-v0.1.1-windows.zip
 ```
 
 解压后双击：
@@ -156,7 +204,7 @@ powershell -ExecutionPolicy Bypass -File .\build_exe.ps1
 指定 Python 环境：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\build_exe.ps1 -Python "C:\Path\To\paper2excel\python.exe" -Version "v0.1.0"
+powershell -ExecutionPolicy Bypass -File .\build_exe.ps1 -Python "C:\Path\To\paper2excel\python.exe" -Version "v0.1.1"
 ```
 
 脚本会执行：
@@ -167,7 +215,7 @@ powershell -ExecutionPolicy Bypass -File .\build_exe.ps1 -Python "C:\Path\To\pap
 - EXE 自检。
 - Release 内容密钥扫描。
 - 生成 `release\Paper2Excel`。
-- 生成 `release\Paper2Excel-v0.1.0-windows.zip`。
+- 生成 `release\Paper2Excel-v0.1.1-windows.zip`。
 
 上传 GitHub Release 时，上传 zip 作为附件即可。源码仓库不要提交 `release/` 目录。
 
@@ -179,7 +227,7 @@ powershell -ExecutionPolicy Bypass -File .\build_exe.ps1 -Python "C:\Path\To\pap
 git init
 git add .
 git commit -m "feat: initial Paper2Excel release"
-git tag v0.1.0
+git tag v0.1.1
 ```
 
 发布前检查：
@@ -200,6 +248,7 @@ assets/               图标资源
 docs/images/          README 截图
 build_exe.ps1         Windows 打包脚本
 config.example.json   示例配置，不含 API Key
+README.en.md          英文说明
 LICENSE               MIT 开源协议
 ```
 

@@ -1,6 +1,6 @@
 param(
     [string]$Python = "D:\ProgramFiles\Anaconda3\envs\paper2excel\python.exe",
-    [string]$Version = "v0.1.0"
+    [string]$Version = "v0.1.1"
 )
 
 $ErrorActionPreference = "Stop"
@@ -68,7 +68,7 @@ Move-Item -LiteralPath (Join-Path $ProjectRoot "dist\Paper2Excel") -Destination 
 Copy-Item -LiteralPath (Join-Path $EnvLibraryBin "libssl-3-x64.dll") -Destination (Join-Path $ReleaseApp "_internal\libssl-3-x64.dll") -Force
 Copy-Item -LiteralPath (Join-Path $EnvLibraryBin "libcrypto-3-x64.dll") -Destination (Join-Path $ReleaseApp "_internal\libcrypto-3-x64.dll") -Force
 Copy-Item -LiteralPath (Join-Path $ProjectRoot "README.md") -Destination (Join-Path $ReleaseApp "README.md") -Force
-Copy-Item -LiteralPath (Join-Path $ProjectRoot "README.zh-CN.md") -Destination (Join-Path $ReleaseApp "README.zh-CN.md") -Force
+Copy-Item -LiteralPath (Join-Path $ProjectRoot "README.en.md") -Destination (Join-Path $ReleaseApp "README.en.md") -Force
 Copy-Item -LiteralPath (Join-Path $ProjectRoot "LICENSE") -Destination (Join-Path $ReleaseApp "LICENSE") -Force
 Copy-Item -LiteralPath (Join-Path $ProjectRoot "config.example.json") -Destination (Join-Path $ReleaseApp "config.example.json") -Force
 Copy-Item -LiteralPath (Join-Path $ProjectRoot "templates") -Destination (Join-Path $ReleaseApp "templates") -Recurse -Force
