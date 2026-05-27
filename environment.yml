@@ -1,0 +1,12 @@
+name: paper2excel
+channels:
+  - defaults
+dependencies:
+  - python=3.13
+  - openpyxl
+  - pytest
+  - pyinstaller
+  - requests
+  - pip
+  - pip:
+      - pymupdf

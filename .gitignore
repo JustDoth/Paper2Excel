@@ -1,0 +1,39 @@
+# Python cache and local tooling
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Build and packaging artifacts
+build/
+dist/
+release/
+*.spec
+*.spec.bak
+
+# Runtime outputs
+outputs/
+logs/
+*.log
+*.tmp
+
+# Local configuration and secrets
+user_config.json
+**/user_config.json
+.env
+.env.*
+!.env.example
+!config.example.json
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

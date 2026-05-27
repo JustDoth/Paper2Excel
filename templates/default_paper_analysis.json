@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "kind": "paper2excel_field_template",
+  "name": "Default Paper Analysis",
+  "task_description": "Analyze one academic paper record. Use only the selected Excel columns and PDF content when available. Return structured JSON for the configured output fields.",
+  "output_fields": [
+    {
+      "name": "Summary",
+      "description": "Summarize the paper's relevance and key information in English.",
+      "optimized_prompt": "Write 2-3 concise English sentences summarizing the paper's core topic, method or evidence, and relevance to the user's task. Use only the provided row content and PDF text. If the available evidence is insufficient, write \"Not supported\".",
+      "field_type": "string",
+      "required": true
+    }
+  ]
+}

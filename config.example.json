@@ -1,0 +1,48 @@
+{
+  "provider": "DeepSeek",
+  "base_url": "https://api.deepseek.com",
+  "model": "deepseek-v4-flash",
+  "api_key": "",
+  "remember_api_key": false,
+  "proxy_url": "",
+  "temperature": 0.2,
+  "timeout_seconds": 180,
+  "max_tokens": 3000,
+  "input_path": "",
+  "output_path": "",
+  "retained_columns": [
+    "Title",
+    "Publication Title",
+    "Publication Year",
+    "Author",
+    "DOI",
+    "Abstract Note",
+    "File Attachments"
+  ],
+  "selected_input_columns": [
+    "Title",
+    "Publication Title",
+    "Publication Year",
+    "Author",
+    "DOI",
+    "Abstract Note",
+    "File Attachments"
+  ],
+  "pdf_path_column": "File Attachments",
+  "task_description": "Analyze the Excel row and fill the requested output fields.",
+  "row_start": "",
+  "row_end": "",
+  "only_empty_outputs": false,
+  "autosave_every": 3,
+  "request_delay_seconds": 0,
+  "pdf_text_limit": 10000,
+  "output_fields": [
+    {
+      "name": "Summary",
+      "description": "Summarize the paper's relevance and key information in English.",
+      "optimized_prompt": "Write 2-3 concise English sentences summarizing the paper's core topic, method or evidence, and relevance to the user's task. Use only the provided row content and PDF text. If the available evidence is insufficient, write \"Not supported\".",
+      "field_type": "string",
+      "required": true
+    }
+  ]
+}
