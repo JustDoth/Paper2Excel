@@ -44,7 +44,7 @@ class BatchOptions:
     max_parse_retries: int = 2
     retry_sleep_seconds: float = 2
     pdf_path_column: str = ""
-    pdf_text_limit: int = 10000
+    pdf_text_limit: int = 100000
     retained_columns: Sequence[str] = field(default_factory=tuple)
     save_raw_response: bool = True
     diagnostic_columns: bool = True
